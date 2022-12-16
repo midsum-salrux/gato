@@ -1,0 +1,9 @@
+:~
+  title+'Gato'
+  info+'Chatbot helper'
+  color+0xab.abab
+  version+[0 0 1]
+  license+'MIT'
+  website+'https://github.com/midsum-salrux/gato'
+  site+/app/gato
+==
