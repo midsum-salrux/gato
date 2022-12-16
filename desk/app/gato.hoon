@@ -2,6 +2,21 @@
 /+  default-agent, dbug
 |%
 +$  card  card:agent:gall
+++  chat-subscribe-card
+  |=  =ship
+  [%pass /chat/updates %agent [ship %chat] %watch /ui]
+++  reply
+  |=  [=id:chat =flag:chat =content:chat]
+  ^-  action:chat
+  :-  flag
+  :-  q.id
+  :-  %writs
+  :-  id
+  :-  %add
+  :-  replying=~
+  :-  author=p.id
+  :-  sent=q.id
+  content
 --
 %-  agent:dbug
 ^-  agent:gall
@@ -11,7 +26,7 @@
 ++  on-init
   ^-  (quip card _this)
   :_  this
-  ~[[%pass /chat/writs %agent [our.bowl %chat] %watch /ui]]
+  ~[(chat-subscribe-card our.bowl)]
 ++  on-save   on-save:def
 ++  on-load   on-load:def
 ++  on-poke   on-poke:def
@@ -23,15 +38,14 @@
   ^-  (quip card _this)
   ~&  "GATO ON-AGENT"
   ?+  wire  (on-agent:def wire sign)
-      [%chat %writs ~]
+      [%chat %updates ~]
     ?+    -.sign  (on-agent:def wire sign)
       %watch-ack  `this
         %kick
       :_  this
-      ~[[%pass /chat/writs %agent [our.bowl %chat] %watch /ui]]
+      ~[(chat-subscribe-card our.bowl)]
     ::
         %fact
-        ~&  p.cage.sign
         ?+    p.cage.sign  `this
             %chat-action-0
           =/  =action:chat  !<(action:chat q.cage.sign)
@@ -43,8 +57,13 @@
             =/  =delta:writs:chat  q.p.diff
             ?+  -.delta  `this
                 %add
-              ~&  [flag=flag memo=p.delta]
-              `this
+              =/  =memo:chat  p.delta
+              ?:  =(our.bowl author.memo)  `this
+              ~&  [flag=flag memo=memo]
+              ~&  (reply [our.bowl now.bowl] flag *content:chat)
+              :_  this
+              ::  TODO send action as poke
+              ~
             ==
           ==
         ==
