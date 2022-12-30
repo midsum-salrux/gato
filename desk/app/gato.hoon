@@ -66,8 +66,8 @@
 ++  replace-vase
   |=  [q=quilt call=cord =vase]
   ^-  quilt
-  ::  TODO
-  q
+  =/  =command  (~(got by q) call)
+  (~(put by q) call [ted.command vase])
 --
 %-  agent:dbug
 =|  state-0
@@ -82,6 +82,7 @@
   ~[(chat-subscribe-card our.bowl)]
 ++  on-save   on-save:def
 ++  on-load   on-load:def
+::  TODO pokes to add command, remove command, and set vase
 ++  on-poke   on-poke:def
 ++  on-watch  on-watch:def
 ++  on-leave  on-leave:def
@@ -101,7 +102,6 @@
         ?+    p.cage.sign  `this
             %chat-action-0
           =/  =action:chat  !<(action:chat q.cage.sign)
-          ::  flag
           =/  =flag:chat  p.action
           =/  =diff:chat  q.q.action
           ?+  -.diff  `this
@@ -111,8 +111,6 @@
                 %add
               =/  =memo:chat  p.delta
               ?:  =(our.bowl author.memo)  `this
-              ::  TODO reply with thread result
-              ::  action=(message [our.bowl now.bowl] flag *content:chat)
               =/  [call=cord text=cord]  (find-slash memo)
               =/  =command  (~(got by quilt) call)
               :_  this
