@@ -10,10 +10,10 @@
   |=  =ship
   [%pass /chat/updates %agent [ship %chat] %watch /ui]
 ++  run-thread-card
-  |=  [=command text=cord =memo:chat]
+  |=  [call=cord =command =flag:chat text=cord =memo:chat]
   ^-  card
   =/  =bird  [text memo vase.command]
-  :*  %pass  /run-command  %arvo  %k  %fard
+  :*  %pass  /result/[call]/(scot %p p.flag)/[q.flag]  %arvo  %k  %fard
       desk.ted.command  name.ted.command  %noun
       !>(bird)
   ==
@@ -24,6 +24,7 @@
 ++  find-slash
   |=  =memo:chat
   ^-  [cord cord]
+  ::  TODO
   ['foo' 'bar']
 ++  message
   |=  [=id:chat =flag:chat =content:chat]
@@ -37,6 +38,16 @@
   :-  author=p.id
   :-  sent=q.id
   content
+++  reply-to-content
+  |=  =reply
+  ^-  content:chat
+  ?^  reply  reply
+  [%story [~ ~[reply]]]
+++  replace-vase
+  |=  [q=quilt call=cord =vase]
+  ^-  quilt
+  ::  TODO
+  q
 --
 %-  agent:dbug
 =|  state-0
@@ -80,20 +91,33 @@
                 %add
               =/  =memo:chat  p.delta
               ?:  =(our.bowl author.memo)  `this
-              ::  TODO: parse message for slash commands
-              ::  find matching thread from state
-              ::  run it
-              ::  reply with result
-              ::action=(message [our.bowl now.bowl] flag *content:chat)
-              =/  [slash=cord text=cord]  (find-slash memo)
-              =/  =command  (~(got by quilt) slash)
+              ::  TODO reply with thread result
+              ::  action=(message [our.bowl now.bowl] flag *content:chat)
+              =/  [call=cord text=cord]  (find-slash memo)
+              =/  =command  (~(got by quilt) call)
               :_  this
-              ~[(run-thread-card command text memo)]
+              ~[(run-thread-card call command flag text memo)]
             ==
           ==
         ==
     ==
   ==
-++  on-arvo   on-arvo:def
+++  on-arvo
+  |=  [=wire sign=sign-arvo]
+  ^-  (quip card _this)
+  ?+  wire  (on-arvo:def wire sign)
+      [%result cord cord cord *]
+    =/  [%result call=cord ship-cord=cord chat=cord *]  wire
+    =/  =ship  (slav %p ship-cord)
+    ?+  sign  (on-arvo:def wire sign)
+        [%khan %arow %.y %noun *]
+      =/  [%khan %arow %.y %noun result=vase]  sign
+      =/  =tuna  !<(tuna result)
+      :_  this(quilt (replace-vase quilt call vase.tuna))
+      :~  %+  message-card  our.bowl
+        (message [our.bowl now.bowl] [ship chat] (reply-to-content reply.tuna))
+      ==
+    ==
+  ==
 ++  on-fail   on-fail:def
 --
