@@ -1,7 +1,7 @@
 /-  chat, *gato
 /+  default-agent, dbug
 |%
-+$  version-state
++$  versioned-state
   $%  state-0
   ==
 +$  state-0  [%0 =quilt]
@@ -36,15 +36,16 @@
       $(inlines t.inlines)
     ==
   =/  [call=tape text=tape]  (scan (trip first) slash-command-rule)
+  ~&  [call text]
   [(crip call) (crip text)]
 ::  "/mycommand lorem ipsum" to ["mycommand" "lorem ipsum"]
 ++  slash-command-rule
-  ;~  (glue ace)
+  ;~  (glue (star ace))
     ;~  pfix
       fas
       (plus alp)
     ==
-    (plus next)
+    (star next)
   ==
 ++  message
   |=  [=id:chat =flag:chat =content:chat]
@@ -80,8 +81,13 @@
   ^-  (quip card _this)
   :_  this
   ~[(chat-subscribe-card our.bowl)]
-++  on-save   on-save:def
-++  on-load   on-load:def
+++  on-save
+  ^-  vase
+  !>  state
+++  on-load
+  |=  old-state=vase
+  ^-  (quip card _this)
+  `this(state !<(versioned-state old-state))
 ++  on-poke
   |=  [=mark =vase]
   ^-  (quip card _this)
@@ -125,7 +131,7 @@
             ?+  -.delta  `this
                 %add
               =/  =memo:chat  p.delta
-              ?:  =(our.bowl author.memo)  `this
+              ::  ?:  =(our.bowl author.memo)  `this
               =/  [call=cord text=cord]  (find-slash memo)
               =/  =command  (~(got by quilt) call)
               :_  this

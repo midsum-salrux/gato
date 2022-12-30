@@ -16,7 +16,7 @@
 ::  reply is the message you're sending
 ::  flag is where to send the reply. you can get it from memo.
 ::  you can update your command's state or config by returning a different vase
-+$  tuna  [=reply =flag:chat =vase]
++$  tuna  [=reply =vase]
 ::  you can return either a cord or a full formatted chat message
 +$  reply  $@(cord content:chat)
 --
