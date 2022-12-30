@@ -24,8 +24,28 @@
 ++  find-slash
   |=  =memo:chat
   ^-  [cord cord]
-  ::  TODO
-  ['foo' 'bar']
+  ::  find the first raw text segment
+  =/  first=cord
+    ?-  content.memo
+        [%notice *]  !!
+        [%story *]
+      =/  inlines  q.p.content.memo
+      |-
+      ?~  inlines  !!
+      ?@  i.inlines  i.inlines
+      $(inlines t.inlines)
+    ==
+  =/  [call=tape text=tape]  (scan (trip first) slash-command-rule)
+  [(crip call) (crip text)]
+::  "/mycommand lorem ipsum" to ["mycommand" "lorem ipsum"]
+++  slash-command-rule
+  ;~  (glue ace)
+    ;~  pfix
+      fas
+      (plus alp)
+    ==
+    (plus next)
+  ==
 ++  message
   |=  [=id:chat =flag:chat =content:chat]
   ^-  action:chat
