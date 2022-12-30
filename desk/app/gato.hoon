@@ -9,6 +9,22 @@
 ++  chat-subscribe-card
   |=  =ship
   [%pass /chat/updates %agent [ship %chat] %watch /ui]
+++  run-thread-card
+  |=  [=command text=cord =memo:chat]
+  ^-  card
+  =/  =bird  [text memo vase.command]
+  :*  %pass  /run-command  %arvo  %k  %fard
+      desk.ted.command  name.ted.command  %noun
+      !>(bird)
+  ==
+++  message-card
+  |=  [our=ship =action:chat]
+  ^-  card
+  [%pass /chat/poke %agent [our %chat] %poke %chat-action !>(action)]
+++  find-slash
+  |=  =memo:chat
+  ^-  [cord cord]
+  ['foo' 'bar']
 ++  message
   |=  [=id:chat =flag:chat =content:chat]
   ^-  action:chat
@@ -21,10 +37,6 @@
   :-  author=p.id
   :-  sent=q.id
   content
-++  message-card
-  |=  [our=ship =action:chat]
-  ^-  card
-  [%pass /chat/poke %agent [our %chat] %poke %chat-action !>(action)]
 --
 %-  agent:dbug
 =|  state-0
@@ -72,9 +84,11 @@
               ::  find matching thread from state
               ::  run it
               ::  reply with result
-              =+  action=(message [our.bowl now.bowl] flag *content:chat)
+              ::action=(message [our.bowl now.bowl] flag *content:chat)
+              =/  [slash=cord text=cord]  (find-slash memo)
+              =/  =command  (~(got by quilt) slash)
               :_  this
-              ~[(message-card our.bowl action)]
+              ~[(run-thread-card command text memo)]
             ==
           ==
         ==
