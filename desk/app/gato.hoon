@@ -1,11 +1,15 @@
-/-  chat
+/-  chat, *gato
 /+  default-agent, dbug
 |%
++$  version-state
+  $%  state-0
+  ==
++$  state-0  [%0 =quilt]
 +$  card  card:agent:gall
 ++  chat-subscribe-card
   |=  =ship
   [%pass /chat/updates %agent [ship %chat] %watch /ui]
-++  reply
+++  message
   |=  [=id:chat =flag:chat =content:chat]
   ^-  action:chat
   :-  flag
@@ -17,8 +21,14 @@
   :-  author=p.id
   :-  sent=q.id
   content
+++  message-card
+  |=  [our=ship =action:chat]
+  ^-  card
+  [%pass /chat/poke %agent [our %chat] %poke %chat-action !>(action)]
 --
 %-  agent:dbug
+=|  state-0
+=*  state  -
 ^-  agent:gall
 |_  =bowl:gall
 +*  this  .
@@ -36,7 +46,6 @@
 ++  on-agent
   |=  [=wire =sign:agent:gall]
   ^-  (quip card _this)
-  ~&  "GATO ON-AGENT"
   ?+  wire  (on-agent:def wire sign)
       [%chat %updates ~]
     ?+    -.sign  (on-agent:def wire sign)
@@ -59,11 +68,13 @@
                 %add
               =/  =memo:chat  p.delta
               ?:  =(our.bowl author.memo)  `this
-              ~&  [flag=flag memo=memo]
-              ~&  (reply [our.bowl now.bowl] flag *content:chat)
+              ::  TODO: parse message for slash commands
+              ::  find matching thread from state
+              ::  run it
+              ::  reply with result
+              =+  action=(message [our.bowl now.bowl] flag *content:chat)
               :_  this
-              ::  TODO send action as poke
-              ~
+              ~[(message-card our.bowl action)]
             ==
           ==
         ==
