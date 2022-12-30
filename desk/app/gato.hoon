@@ -82,8 +82,23 @@
   ~[(chat-subscribe-card our.bowl)]
 ++  on-save   on-save:def
 ++  on-load   on-load:def
-::  TODO pokes to add command, remove command, and set vase
-++  on-poke   on-poke:def
+++  on-poke
+  |=  [=mark =vase]
+  ^-  (quip card _this)
+  ?+  mark  !!
+      %add
+    =/  [call=cord =command]  !<([cord command] vase)
+    `this(quilt (~(put by quilt) call command))
+  ::
+  ::  %add and %set are aliases for each other
+      %set
+    =/  [call=cord =command]  !<([cord command] vase)
+    `this(quilt (~(put by quilt) call command))
+  ::
+      %remove
+    =/  call=cord  !<(cord vase)
+    `this(quilt (~(del by quilt) call))
+  ==
 ++  on-watch  on-watch:def
 ++  on-leave  on-leave:def
 ++  on-peek   on-peek:def
