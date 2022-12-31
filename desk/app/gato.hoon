@@ -36,7 +36,6 @@
       $(inlines t.inlines)
     ==
   =/  [call=tape text=tape]  (scan (trip first) slash-command-rule)
-  ~&  [call text]
   [(crip call) (crip text)]
 ::  "/mycommand lorem ipsum" to ["mycommand" "lorem ipsum"]
 ++  slash-command-rule
