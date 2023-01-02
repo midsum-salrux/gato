@@ -23,7 +23,7 @@
 ++  geocoder-url
   |=  [location=tape api-key=tape]
   ^-  tape
-  "https://us1.locationiq.com/v1/search?key={api-key}&q={location}&format=json"
+  "https://us1.locationiq.com/v1/search?key={api-key}&q={(en-urlt:html location)}&format=json"
 ++  weather-decoder
   %-  ot
   :~  :-  %'current_weather'
