@@ -28,7 +28,7 @@
   =/  m  (strand ,vase)
   =/  =bird  !<(bird arg)
   =/  api-key  !<(tape vase.bird)
-  =/  symbol  (scan (trip text.bird) ticker-rule:tendiebot-quote)
+  =/  symbol  (cuss (scan (trip text.bird) ticker-rule:tendiebot-quote))
   ;<  =json  bind:m  (fetch-json (url symbol api-key))
   =/  result  (numberize ((mine-json symbol) json))
   =/  =reply  (crip (format:tendiebot-quote result))
