@@ -90,7 +90,6 @@
   ^-  thread:spider
   |=  arg=vase
   ^-  form:m
-  ::  TODO url encode the geocoding query
   =/  m  (strand ,vase)
   =/  =bird  !<(bird arg)
   =/  [api-key=tape temperature-unit=tape]  !<([tape tape] vase.bird)
