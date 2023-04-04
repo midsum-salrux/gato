@@ -11,7 +11,7 @@
 ::  text is the first plaintext element from the triggering message, minus the "/foo " command
 ::  memo is the raw chat message
 ::  vase is taken from the quilt
-+$  bird  [text=cord =memo:chat =vase]
++$  bird  [text=cord =memo:chat =flag:chat =vase]
 ::  your thread should return a tuna
 ::  reply is the message you're sending
 ::  flag is where to send the reply. you can get it from memo.

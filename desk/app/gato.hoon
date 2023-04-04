@@ -12,7 +12,7 @@
 ++  run-thread-card
   |=  [call=cord =command =flag:chat text=cord =memo:chat]
   ^-  card
-  =/  =bird  [text memo vase.command]
+  =/  =bird  [text memo flag vase.command]
   :*  %pass  /result/[call]/(scot %p p.flag)/[q.flag]  %arvo  %k  %fard
       desk.ted.command  name.ted.command  %noun
       !>(bird)
