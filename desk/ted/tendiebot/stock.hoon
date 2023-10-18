@@ -19,8 +19,8 @@
   |=  [name=tape price=tape change=tape]
   ^-  quote:tendiebot-quote
   :+  name
-    (ne (need (de-json:html (crip price))))
-  `(ne (need (de-json:html (crip change))))
+    (ne (need (de:json:html (crip price))))
+  `(ne (need (de:json:html (crip change))))
 ++  ted
   ^-  thread:spider
   |=  arg=vase
