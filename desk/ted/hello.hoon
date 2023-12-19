@@ -16,5 +16,4 @@
 =/  greeting=tape  !<(tape vase.bird)
 =/  =reply
   (crip "{greeting} {(scow %p author.memo.bird)}! You said {(trip text.bird)}")
-%-  pure:m
-!>  [reply vase.bird]
+(pure:m !>([reply vase.bird]))
