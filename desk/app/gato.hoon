@@ -140,12 +140,15 @@
                 %post
               ?-  -.r-post.r-channel.r-channels
                   %set
+                ~&  "post is: {<post.r-post.r-channel.r-channels>}"
+                ?~  post.r-post.r-channel.r-channels
+                  `this  :: Probably a post deletion, exit cleanly
                 =/  =post:channels  (need post.r-post.r-channel.r-channels)
                 =/  =essay:channels  +.post
                 =/  =memo:channels  -.essay
                 =/  [call=cord text=cord]  (find-slash memo)
                 ?:  &(=(call '') =(text ''))
-                  `this  :: do nothing if we get text that's not a gato command
+                  `this  :: Not a gato command, exit cleanly
                 =/  =command  (~(got by quilt) call)
                 :_  this
                 ~[(run-thread-card call command nest.r-channels text memo)]
@@ -169,6 +172,11 @@
     =/  [%result call=cord ship-cord=cord chat=cord *]  wire
     =/  =ship  (slav %p ship-cord)
     ?+  sign  (on-arvo:def wire sign)
+      :: Failed thread
+        [%khan %arow %.n %thread-fail *]
+      ~&  "%gato thread failed unexpectedly"
+      `this    
+      ::
         [%khan %arow %.y %noun *]
       =/  [%khan %arow %.y %noun result=vase]  sign
       =/  =tuna  !<(tuna result)
