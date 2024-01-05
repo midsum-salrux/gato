@@ -140,7 +140,6 @@
                 %post
               ?-  -.r-post.r-channel.r-channels
                   %set
-                ~&  "post is: {<post.r-post.r-channel.r-channels>}"
                 ?~  post.r-post.r-channel.r-channels
                   `this  :: Probably a post deletion, exit cleanly
                 =/  =post:channels  (need post.r-post.r-channel.r-channels)
