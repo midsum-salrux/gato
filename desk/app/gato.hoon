@@ -1,4 +1,4 @@
-/-  chat, *gato
+/-  channels, chat, *gato
 /+  default-agent, dbug
 |%
 +$  versioned-state
@@ -6,37 +6,44 @@
   ==
 +$  state-0  [%0 =quilt]
 +$  card  card:agent:gall
+::
 ++  chat-subscribe-card
   |=  =ship
-  [%pass /chat/updates %agent [ship %chat] %watch /ui]
+  [%pass /chat/updates %agent [ship %channels] %watch /]
+::
 ++  run-thread-card
-  |=  [call=cord =command =flag:chat text=cord =memo:chat]
+  |=  [call=cord =command =nest:channels text=cord =memo:channels]
   ^-  card
-  =/  =bird  [text memo flag vase.command]
-  :*  %pass  /result/[call]/(scot %p p.flag)/[q.flag]  %arvo  %k  %fard
+  =/  =bird  [text memo nest vase.command]
+  :*  %pass  /result/[call]/(scot %p +<.nest)/[+>.nest]  %arvo  %k  %fard
       desk.ted.command  name.ted.command  %noun
       !>(bird)
   ==
+::
 ++  message-card
-  |=  [our=ship =action:chat]
+  |=  [our=ship action=c-channels:channels]
   ^-  card
-  [%pass /chat/poke %agent [our %chat] %poke %chat-action !>(action)]
+  [%pass /channel/poke %agent [our %channels] %poke %channel-action !>(action)]
+::
 ++  find-slash
-  |=  =memo:chat
+  |=  =memo:channels
   ^-  [cord cord]
-  ::  find the first raw text segment
+  ::  find the *first* raw text segment
+  =/  =verse:channels  (snag 0 content.memo)
   =/  first=cord
-    ?-  content.memo
-        [%notice *]  !!
-        [%story *]
-      =/  inlines  q.p.content.memo
+    ?-  verse
+        [%block *]  !!
+        [%inline *]
+      =/  inlines  p.verse
       |-
       ?~  inlines  !!
       ?@  i.inlines  i.inlines
       $(inlines t.inlines)
     ==
-  =/  [call=tape text=tape]  (scan (trip first) slash-command-rule)
-  [(crip call) (crip text)]
+  ?:  =((scag 1 (trip first)) "/")
+    =/  [call=tape text=tape]  (scan (trip first) slash-command-rule)
+    [(crip call) (crip text)]
+  ['' '']  :: ensure we don't generate a dojo printable error every time some non-gato text gets written to the chat  
 ::  "/mycommand lorem ipsum" to ["mycommand" "lorem ipsum"]
 ++  slash-command-rule
   ;~  (glue (star ace))
@@ -46,29 +53,34 @@
     ==
     (star next)
   ==
+::
 ++  message
-  |=  [=id:chat =flag:chat =content:chat]
-  ^-  action:chat
-  :-  flag
-  :-  q.id
-  :-  %writs
-  :-  id
-  :-  %add
-  :-  replying=~
-  :-  author=p.id
-  :-  sent=q.id
-  content
+  |=  [=id-post:channels =nest:channels =story:channels]
+  ^-  c-channels:channels
+  =/  memo  :*
+    content=story
+    author=+<.nest
+    sent=id-post
+  ==
+  =/  kind-data  [%chat ~]
+  =/  essay  [memo kind-data]
+  =/  post-action  [%add essay]
+  =/  action  [%post post-action]
+  `c-channels:channels`[%channel nest action]
+::
 ++  reply-to-content
   |=  =reply
-  ^-  content:chat
+  ^-  story:channels
   ?^  reply  reply
-  [%story [~ ~[reply]]]
+    `(list verse:channels)`[[%inline `(list inline:channels)`[`@t`reply ~]] ~]
+::
 ++  replace-vase
   |=  [q=quilt call=cord =vase]
   ^-  quilt
   =/  =command  (~(got by q) call)
   (~(put by q) call [ted.command vase])
 --
+::
 %-  agent:dbug
 =|  state-0
 =*  state  -
@@ -120,21 +132,32 @@
     ::
         %fact
         ?+    p.cage.sign  `this
-            %chat-action-0
-          =/  =action:chat  !<(action:chat q.cage.sign)
-          =/  =flag:chat  p.action
-          =/  =diff:chat  q.q.action
-          ?+  -.diff  `this
-              %writs
-            =/  =delta:writs:chat  q.p.diff
-            ?+  -.delta  `this
-                %add
-              =/  =memo:chat  p.delta
-              ::  ?:  =(our.bowl author.memo)  `this
-              =/  [call=cord text=cord]  (find-slash memo)
-              =/  =command  (~(got by quilt) call)
-              :_  this
-              ~[(run-thread-card call command flag text memo)]
+            %channel-response
+          =/  =r-channels:channels  !<(r-channels:channels q.cage.sign)
+          ?+  -.nest.r-channels  `this  ::switch on kind
+              %chat
+            ?+  -.r-channel.r-channels  `this
+                %post
+              ?-  -.r-post.r-channel.r-channels
+                  %set
+                ?~  post.r-post.r-channel.r-channels
+                  `this  :: Probably a post deletion, exit cleanly
+                =/  =post:channels  (need post.r-post.r-channel.r-channels)
+                =/  =essay:channels  +.post
+                =/  =memo:channels  -.essay
+                =/  [call=cord text=cord]  (find-slash memo)
+                ?:  &(=(call '') =(text ''))
+                  `this  :: Not a gato command, exit cleanly
+                =/  =command  (~(got by quilt) call)
+                :_  this
+                ~[(run-thread-card call command nest.r-channels text memo)]
+                  %reply  
+                `this
+                  %reacts
+                `this
+                  %essay  
+                `this
+              ==
             ==
           ==
         ==
@@ -148,12 +171,17 @@
     =/  [%result call=cord ship-cord=cord chat=cord *]  wire
     =/  =ship  (slav %p ship-cord)
     ?+  sign  (on-arvo:def wire sign)
+      :: Failed thread
+        [%khan %arow %.n %thread-fail *]
+      ~&  "%gato thread failed unexpectedly"
+      `this    
+      ::
         [%khan %arow %.y %noun *]
       =/  [%khan %arow %.y %noun result=vase]  sign
       =/  =tuna  !<(tuna result)
       :_  this(quilt (replace-vase quilt call vase.tuna))
       :~  %+  message-card  our.bowl
-        (message [our.bowl now.bowl] [ship chat] (reply-to-content reply.tuna))
+        (message now.bowl [%chat ship chat] (reply-to-content reply.tuna))
       ==
     ==
   ==
